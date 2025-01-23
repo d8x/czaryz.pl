@@ -1,1 +1,120 @@
-<h1>czaryz.pl</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>czaryz.pl</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #e3f2fd, #fff);
+            height: 300vh; /* Reduced height for accessibility */
+            overflow-x: hidden;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: #555;
+            animation: fade-in-out 2s infinite;
+            pointer-events: none;
+        }
+
+        .hidden-message {
+            font-size: 2rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0; /* Initially hidden */
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .hidden-message.visible {
+            opacity: 1; /* Fade-in effect */
+            transform: translateX(-50%) translateY(-20px); /* Slide up slightly */
+        }
+
+        /* Position the messages at appropriate scroll depths */
+        #message-1 {
+            top: 100vh; /* Position 1/3 down the page */
+            color: #1e88e5; /* Blue */
+        }
+
+        #message-2 {
+            top: 200vh; /* Position 2/3 down the page */
+            color: #43a047; /* Green */
+        }
+
+        #message-3 {
+            top: 250vh; /* Near the end, but not at the very bottom */
+            color: #e53935; /* Red */
+        }
+
+        /* Sparkling star background for a magical effect */
+        @keyframes sparkle {
+            0% { opacity: 0.3; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-10px); }
+            100% { opacity: 0.3; transform: translateY(0); }
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: sparkle 3s infinite ease-in-out;
+        }
+
+        /* Spread sparkles randomly */
+        .sparkle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 30%; left: 70%; animation-delay: 1s; }
+        .sparkle:nth-child(3) { top: 50%; left: 40%; animation-delay: 2s; }
+        .sparkle:nth-child(4) { top: 80%; left: 60%; animation-delay: 1.5s; }
+        .sparkle:nth-child(5) { top: 70%; left: 10%; animation-delay: 2.5s; }
+
+        @keyframes fade-in-out {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+<!-- Sparkles for a magical scrolling effect -->
+<div class="sparkle"></div>
+<div class="sparkle"></div>
+<div class="sparkle"></div>
+<div class="sparkle"></div>
+<div class="sparkle"></div>
+
+<!-- Scroll indicator -->
+<div class="scroll-indicator">✨ Skroluj dalej aby zobaczyć więcej! ✨</div>
+
+<!-- Hidden messages -->
+<div class="hidden-message" id="message-1">Jacek</div>
+<div class="hidden-message" id="message-2">Kamil</div>
+<div class="hidden-message" id="message-3">Nadchodzi więcej</div>
+
+<script>
+    // JavaScript to detect when messages enter the viewport
+    document.addEventListener('scroll', function () {
+        const messages = document.querySelectorAll('.hidden-message');
+
+        messages.forEach(message => {
+            const rect = message.getBoundingClientRect();
+
+            // Check if the message is in the viewport
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                message.classList.add('visible');
+            }
+        });
+    });
+</script>
+</body>
+</html>
